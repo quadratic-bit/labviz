@@ -1,5 +1,6 @@
 LabViz architecture
 -------------------
+Антончиков Артём Денисович, Б05-401, antonchikov.ad@phystech.edu
 
 ### Problem statement
 Consider the following python code for visualizing lab data within an
