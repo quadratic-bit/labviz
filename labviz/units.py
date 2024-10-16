@@ -4,6 +4,8 @@ from dataclasses import dataclass
 SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹"
 
 def superscript(number: int) -> str:
+    if number == -1: # avoid calling superscript(1)
+        return "⁻¹"
     if number < 0:
         return "⁻" + superscript(-number)
     if number == 1:
