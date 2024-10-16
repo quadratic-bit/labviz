@@ -121,5 +121,3 @@ amp = SIValue(1.0, SIUnit(amp=1))
 k   = SIValue(1.0, SIUnit(k=1))
 mol = SIValue(1.0, SIUnit(mol=1))
 cd  = SIValue(1.0, SIUnit(cd=1))
-
-# TODO: add tests
