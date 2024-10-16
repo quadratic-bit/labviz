@@ -101,12 +101,16 @@ class SIValue:
     def __pow__(self, other: int, /) -> SIValue:
         return SIValue(self.value ** other, self.dimension ** other)
 
+    def __eq__(self, other: object, /) -> bool:
+        return type(other) == SIValue and \
+                self.value == other.value and \
+                self.dimension == other.dimension
+
     def __str__(self) -> str:
         return f"{self.value} {self.dimension}"
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({self})"
-
 
 s   = SIValue(1.0, SIUnit(s=1))
 m   = SIValue(1.0, SIUnit(m=1))
