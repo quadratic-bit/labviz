@@ -82,9 +82,14 @@ class SIValue:
         self.value = value
         self.dimension = dimension
 
-    def __mul__(self, other: SIValue, /) -> SIValue:
-        return SIValue(self.value * other.value,
-                       self.dimension * other.dimension)
+    def __mul__(self, other: SIValue | float, /) -> SIValue:
+        if isinstance(other, SIValue):
+            return SIValue(self.value * other.value,
+                           self.dimension * other.dimension)
+        return SIValue(self.value * other, self.dimension)
+
+    def __rmul__(self, other: SIValue | float, /) -> SIValue:
+        return self * other
 
     def __truediv__(self, other: SIValue, /) -> SIValue:
         return SIValue(self.value / other.value,

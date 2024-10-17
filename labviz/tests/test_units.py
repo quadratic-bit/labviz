@@ -10,6 +10,6 @@ def test_superscript():
 
 def test_unit_arithmetics():
     assert u.amp / u.s == u.SIValue(1.0, u.SIUnit(amp=1, s=-1))
-    assert u.SIValue(2, u.SIUnit()) * u.kg / u.m ** 2 == u.SIValue(2, u.SIUnit(kg=1, m=-2))
+    assert 2 * u.kg / u.m ** 2 == u.SIValue(2, u.SIUnit(kg=1, m=-2))
     with pytest.raises(u.DimensionError):
         _ = u.cd + u.k
