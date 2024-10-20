@@ -1,6 +1,5 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from types import NotImplementedType
 
 SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹"
 
@@ -83,7 +82,8 @@ class SIValue:
         self.value = value
         self.dimension = dimension
 
-    def __mul__(self, other: object, /) -> SIValue:
+    # TODO: type annotations
+    def __mul__(self, other: object, /):
         if isinstance(other, SIValue):
             return SIValue(self.value * other.value,
                            self.dimension * other.dimension)
@@ -91,10 +91,10 @@ class SIValue:
             return NotImplemented
         return SIValue(self.value * other, self.dimension)
 
-    def __rmul__(self, other: object, /) -> SIValue:
+    def __rmul__(self, other: object, /):
         return self * other
 
-    def __truediv__(self, other: object, /) -> SIValue:
+    def __truediv__(self, other: object, /):
         if isinstance(other, SIValue):
             return SIValue(self.value / other.value,
                            self.dimension / other.dimension)
