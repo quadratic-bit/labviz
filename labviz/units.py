@@ -15,6 +15,27 @@ def superscript(number: int) -> str:
         result += SUPERSCRIPT[int(digit)]
     return result
 
+localization = {
+    "en": {
+        "s": "s",
+        "m": "m",
+        "kg": "kg",
+        "A": "A",
+        "K": "K",
+        "mol": "mol",
+        "cd": "cd",
+    },
+    "ru": {
+        "s": "с",
+        "m": "м",
+        "kg": "кг",
+        "A": "А",
+        "K": "К",
+        "mol": "моль",
+        "cd": "кд",
+    }
+}
+
 class DimensionError(Exception):
     pass
 
@@ -28,24 +49,23 @@ class SIUnit:
     mol: int = 0
     cd: int = 0
 
-    def __str__(self) -> str:
+    def str_locale(self, locale: str) -> str:
         # TODO: handle derived units
         result = []
-        if self.s != 0:
-            result.append("s" + superscript(self.s))
-        if self.m != 0:
-            result.append("m" + superscript(self.m))
-        if self.kg != 0:
-            result.append("kg" + superscript(self.kg))
-        if self.amp != 0:
-            result.append("A" + superscript(self.amp))
-        if self.k != 0:
-            result.append("K" + superscript(self.k))
-        if self.mol != 0:
-            result.append("mol" + superscript(self.mol))
-        if self.cd != 0:
-            result.append("cd" + superscript(self.cd))
+        for unit in ((self.s, "s"),
+                     (self.m, "m"),
+                     (self.kg, "kg"),
+                     (self.amp, "A"),
+                     (self.k, "K"),
+                     (self.mol, "mol"),
+                     (self.cd, "cd")):
+            if unit[0] != 0:
+                result.append(localization[locale][unit[1]] + \
+                        superscript(unit[0]))
         return "·".join(result)
+
+    def __str__(self) -> str:
+        return self.str_locale("en")
 
     def __mul__(self, other: SIUnit, /) -> SIUnit:
         return SIUnit(s   = self.s   + other.s,
