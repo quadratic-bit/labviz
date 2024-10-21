@@ -3,6 +3,7 @@ import matplotlib
 import numpy as np
 from dataclasses import dataclass
 from labviz.series import Series
+from labviz.errors import least_squares_error, round_on_pivot
 
 COLOR_ROTATION = ("r", "g", "b", "y", "m", "c", "k")
 color = 0
@@ -31,8 +32,10 @@ def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") ->
     slope, shift = np.polyfit(X.values, Y.values, 1)
     clr = next_color()
     plt.plot(X.values, Y.values, clr + "o")
-    # TODO: label
-    plt.plot(X.values, shift + slope * X.values, clr + "-", lw=1)
+    sigma_slope, sigma_shift = least_squares_error(X, Y, slope)
+    k = round_on_pivot(sigma_slope, slope)[1]
+    b = round_on_pivot(sigma_shift, shift)[1]
+    plt.plot(X.values, shift + slope * X.values, clr + "-", lw=1, label=f"y = {k}x + {b}")
     plt.xlabel((xlabel + ", " if xlabel else "") + X.dimension.str_locale(locale))
     plt.ylabel((ylabel + ", " if ylabel else "") + Y.dimension.str_locale(locale))
     plt.grid(linestyle="--")
