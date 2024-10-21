@@ -1,4 +1,4 @@
-from .. import units as u
+import labviz.units as u
 import pytest
 
 def test_superscript():

@@ -1,5 +1,5 @@
 from __future__ import annotations
-import units as u
+import labviz.units as u
 import numpy as np
 import numpy.typing as npt
 
