@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
 from dataclasses import dataclass
-from series import Series
+from labviz.series import Series
 
 COLOR_ROTATION = ("r", "g", "b", "y", "m", "c", "k")
 color = 0
