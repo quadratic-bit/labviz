@@ -31,7 +31,7 @@ class Series:
 
     def __eq__(self, other: object, /) -> bool:
         return type(other) == Series and \
-                self.values == other.values and \
+                (self.values == other.values).all() and \
                 self.dimension == other.dimension
 
     def __str__(self) -> str:
