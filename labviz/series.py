@@ -1,10 +1,24 @@
+"""A Class for working with a collection of values with SI units."""
 from __future__ import annotations
 import labviz.units as u
 import numpy as np
 import numpy.typing as npt
 
 class Series:
+    """An array of floating point values with associated SI unit.
+
+    Attributes:
+        values: NumPy array of `np.float32` values.
+        dimension: An SI unit.
+    """
+
     def __init__(self, base_unit: u.SIUnit | u.SIValue, values: npt.ArrayLike):
+        """Initializes instance based on unit and an array of values.
+
+        Args:
+            base_unit: An SI unit or a value with appropriate SI unit.
+            values: An array of floating point numbers.
+        """
         if isinstance(base_unit, u.SIValue):
             self.dimension = base_unit.dimension
         else:
