@@ -1,8 +1,20 @@
+"""Functions for calculating errors and rounding numbers."""
 from labviz.series import Series
 import numpy as np
 import math
 
+# TODO: make slope optional
 def least_squares_error(X: Series, Y: Series, slope: float) -> tuple[float, float]:
+    """Computes error for least square regression coefficients.
+
+    Args:
+        X: Series of x values.
+        Y: Series of y values.
+        slope: Calculated slope based on provided X and Y.
+
+    Returns:
+        A tuple of calculated errors, `(sigma_slope, sigma_shift)`.
+    """
     length = len(X.values)
     assert length == len(Y.values)
     x = X.values
@@ -16,6 +28,18 @@ def least_squares_error(X: Series, Y: Series, slope: float) -> tuple[float, floa
     return (sigma_slope, sigma_shift)
 
 def round_on_pivot(pivot: float, value: float) -> tuple[float, float]:
+    """Apply scientific rounding.
+
+    Round pivot based on its first significant digit and then round value
+    based on this number.
+
+    Args:
+        pivot: A floating point number dictating rounding places needed.
+        value: A floating point number rounded based on pivot.
+
+    Returns:
+        A tuple of rounded numbers, `(pivot, value)`.
+    """
     abs_pivot = abs(pivot)
     abs_value = abs(value)
     shift = int(math.log10(abs_pivot))

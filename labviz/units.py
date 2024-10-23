@@ -1,9 +1,29 @@
+"""A set of classes for working with SI units."""
 from __future__ import annotations
 from dataclasses import dataclass
 
 SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹"
 
 def superscript(number: int) -> str:
+    """Converts an integer representing power into a readable superscript.
+
+    Explicitly, returns an empty string if `number` is 1 and returns a string
+    containing `number`'s superscript otherwise.
+
+    Args:
+        number: A number to be converted.
+
+    Returns:
+        A string, containing a number as an integer power (superscript).
+        For example,
+
+        ```python
+        assert u.superscript(0) == "⁰"
+        assert u.superscript(1) == ""
+        assert u.superscript(3) == "³"
+        assert u.superscript(-1) == "⁻¹"
+        ```
+    """
     if number == -1: # avoid calling superscript(1)
         return "⁻¹"
     if number < 0:
@@ -37,10 +57,23 @@ localization = {
 }
 
 class DimensionError(Exception):
+    """Illegal operations with dimensions."""
     pass
 
 @dataclass(frozen=True, kw_only=True)
 class SIUnit:
+    """An array representing SI dimensions.
+
+    Attributes:
+        s: A second.
+        m: A meter.
+        kg: A kilogram.
+        amp: An ampere.
+        k: A kelvin.
+        mol: A mole.
+        cd: A candela.
+    """
+
     s: int = 0
     m: int = 0
     kg: int = 0
@@ -50,6 +83,12 @@ class SIUnit:
     cd: int = 0
 
     def str_locale(self, locale: str) -> str:
+        """Convert the set of units into a human-readable string.
+
+        Args:
+            locale: One of the implemented locale strings
+              (currently, "en" or "ru").
+        """
         # TODO: handle derived units
         result = []
         for unit in ((self.s, "s"),
@@ -98,7 +137,20 @@ class SIUnit:
         return f"{type(self).__name__}({self})"
 
 class SIValue:
+    """A floating point value associated with SI dimensions.
+
+    Attributes:
+        value: A floating point value.
+        dimension: SI dimension.
+    """
+
     def __init__(self, value: float, dimension: SIUnit):
+        """Initializes instance based on value and dimension.
+
+        Args:
+            value: A floating point number.
+            dimension: An object representing value's SI unit.
+        """
         self.value = value
         self.dimension = dimension
 

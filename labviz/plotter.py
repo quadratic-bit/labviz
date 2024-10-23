@@ -1,3 +1,4 @@
+"""Functions for creating and displaying plots compliant with the standarts."""
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
@@ -10,12 +11,22 @@ color = 0
 mode = ""
 
 def next_color() -> str:
+    """Rotates global color variable.
+
+    Returns:
+        The next color in rotation.
+    """
     global color
     result = COLOR_ROTATION[color]
     color = (color + 1) % len(COLOR_ROTATION)
     return result
 
 def ensure_mode(new_mode: str):
+    """Sets matplotlib.plt mode to a new one if needed.
+
+    Args:
+        new_mode: A string containing new mode.
+    """
     global mode
     if mode != new_mode:
         matplotlib.use(new_mode)
@@ -23,11 +34,29 @@ def ensure_mode(new_mode: str):
 
 @dataclass
 class RegressionCoefficients:
+    """A couple of regression coefficients, namely slope and shift.
+
+    Attributes:
+        slope: First coefficient.
+        shift: Free term.
+    """
     slope: float
     shift: float
 
 # TODO: multiple plots
 def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") -> RegressionCoefficients:
+    """Plot Y against X via matplotlib with regression line.
+
+    Args:
+        X: Series of x values.
+        Y: Series of y values.
+        xlabel: Label for the X axis.
+        ylabel: Label for the Y axis.
+        locale: SI units localization, either "en" or "ru".
+
+    Returns:
+        Regression line coefficients object.
+    """
     ensure_mode("Qt5Agg")
     slope, shift = np.polyfit(X.values, Y.values, 1)
     clr = next_color()
