@@ -35,7 +35,7 @@ def superscript(number: int) -> str:
         result += SUPERSCRIPT[int(digit)]
     return result
 
-localization = {
+LOCALIZATION = {
     "en": {
         "s": "s",
         "m": "m",
@@ -99,7 +99,7 @@ class SIUnit:
                      (self.mol, "mol"),
                      (self.cd, "cd")):
             if unit[0] != 0:
-                result.append(localization[locale][unit[1]] + \
+                result.append(LOCALIZATION[locale][unit[1]] + \
                         superscript(unit[0]))
         return "·".join(result)
 
