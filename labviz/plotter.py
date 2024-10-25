@@ -1,4 +1,5 @@
 """Functions for creating and displaying plots compliant with the standarts."""
+from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
@@ -9,6 +10,11 @@ from labviz.errors import least_squares_error, round_on_pivot
 COLOR_ROTATION = ("r", "g", "b", "y", "m", "c", "k")
 color = 0
 mode = ""
+
+matplotlib.rcParams.update({
+    "pgf.texsystem": "pdflatex",
+    "text.usetex": False,
+})
 
 def next_color() -> str:
     """Rotates global color variable.
@@ -33,18 +39,19 @@ def ensure_mode(new_mode: str):
         mode = new_mode
 
 @dataclass
-class RegressionCoefficients:
+class LabPlot:
     """A couple of regression coefficients, namely slope and shift.
 
     Attributes:
         slope: First coefficient.
         shift: Free term.
     """
+    fig: Figure
     slope: float
     shift: float
 
 # TODO: multiple plots
-def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") -> RegressionCoefficients:
+def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") -> LabPlot:
     """Plot Y against X via matplotlib with regression line.
 
     Args:
@@ -60,6 +67,7 @@ def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") ->
     ensure_mode("Qt5Agg")
     slope, shift = np.polyfit(X.values, Y.values, 1)
     clr = next_color()
+    fig = plt.figure()
     plt.plot(X.values, Y.values, clr + "o")
     sigma_slope, sigma_shift = least_squares_error(X, Y, slope)
     k = round_on_pivot(sigma_slope, slope)[1]
@@ -70,4 +78,13 @@ def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") ->
     plt.grid(linestyle="--")
     plt.legend()
     plt.show()
-    return RegressionCoefficients(slope, shift)
+    return LabPlot(fig, slope, shift)
+
+def save_plot(fig: Figure, filename: str, extra_langs=[]):
+    langs = "".join(map(lambda l: "," + l, extra_langs))
+    matplotlib.rcParams.update({
+        "pgf.preamble": "\n".join([
+            f"\\usepackage[english{langs}]{{babel}}"
+        ])
+    })
+    fig.savefig(filename, bbox_inches="tight")
