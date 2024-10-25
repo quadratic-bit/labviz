@@ -51,7 +51,11 @@ class LabPlot:
     shift: float
 
 # TODO: multiple plots
-def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") -> LabPlot:
+def plot_and_regress(X: Series,
+                     Y: Series,
+                     xlabel="",
+                     ylabel="",
+                     locale="en") -> LabPlot:
     """Plot Y against X via matplotlib with regression line.
 
     Args:
@@ -72,9 +76,17 @@ def plot_and_regress(X: Series, Y: Series, xlabel="", ylabel="", locale="en") ->
     sigma_slope, sigma_shift = least_squares_error(X, Y, slope)
     k = round_on_pivot(sigma_slope, slope)[1]
     b = round_on_pivot(sigma_shift, shift)[1]
-    plt.plot(X.values, shift + slope * X.values, clr + "-", lw=1, label=f"y = {k}x + {b}")
-    plt.xlabel((xlabel + ", " if xlabel else "") + X.dimension.str_locale(locale))
-    plt.ylabel((ylabel + ", " if ylabel else "") + Y.dimension.str_locale(locale))
+    plt.plot(X.values,
+             shift + slope * X.values,
+             clr + "-",
+             lw=1,
+             label=f"y = {k}x + {b}")
+    plt.xlabel(
+        (xlabel + ", " if xlabel else "") + X.dimension.str_locale(locale)
+    )
+    plt.ylabel(
+        (ylabel + ", " if ylabel else "") + Y.dimension.str_locale(locale)
+    )
     plt.grid(linestyle="--")
     plt.legend()
     plt.show()

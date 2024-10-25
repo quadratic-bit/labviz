@@ -176,12 +176,16 @@ class SIValue:
 
     def __add__(self, other: SIValue, /) -> SIValue:
         if self.dimension != other.dimension:
-            raise DimensionError("Cannot add two SI values with unequal dimensions")
+            raise DimensionError(
+                    "Cannot add two SI values with unequal dimensions"
+            )
         return SIValue(self.value + other.value, self.dimension)
 
     def __sub__(self, other: SIValue, /) -> SIValue:
         if self.dimension != other.dimension:
-            raise DimensionError("Cannot subtract two SI values with unequal dimensions")
+            raise DimensionError(
+                    "Cannot subtract two SI values with unequal dimensions"
+            )
         return SIValue(self.value - other.value, self.dimension)
 
     def __pow__(self, other: int, /) -> SIValue:

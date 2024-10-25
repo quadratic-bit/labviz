@@ -4,7 +4,9 @@ import numpy as np
 import math
 
 # TODO: make slope optional
-def least_squares_error(X: Series, Y: Series, slope: float) -> tuple[float, float]:
+def least_squares_error(X: Series,
+                        Y: Series,
+                        slope: float) -> tuple[float, float]:
     """Computes error for least square regression coefficients.
 
     Args:
