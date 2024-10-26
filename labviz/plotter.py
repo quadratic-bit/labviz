@@ -45,10 +45,14 @@ class LabPlot:
     Attributes:
         slope: First coefficient.
         shift: Free term.
+        slope_error: Random error of calculated slope
+        shift_error: Random error of calculated shift
     """
     fig: Figure
     slope: float
     shift: float
+    slope_error: float
+    shift_error: float
 
 # TODO: multiple plots
 def plot_and_regress(X: Series,
@@ -74,8 +78,8 @@ def plot_and_regress(X: Series,
     fig = plt.figure()
     plt.plot(X.values, Y.values, clr + "o")
     sigma_slope, sigma_shift = least_squares_error(X, Y, slope)
-    k = round_on_pivot(sigma_slope, slope)[1]
-    b = round_on_pivot(sigma_shift, shift)[1]
+    sigma_k, k = round_on_pivot(sigma_slope, slope)
+    sigma_b, b = round_on_pivot(sigma_shift, shift)
     plt.plot(X.values,
              shift + slope * X.values,
              clr + "-",
@@ -90,7 +94,7 @@ def plot_and_regress(X: Series,
     plt.grid(linestyle="--")
     plt.legend()
     plt.show()
-    return LabPlot(fig, slope, shift)
+    return LabPlot(fig, k, b, sigma_k, sigma_b)
 
 def save_plot(fig: Figure, filename: str, extra_langs=[]):
     langs = "".join(map(lambda l: "," + l, extra_langs))
