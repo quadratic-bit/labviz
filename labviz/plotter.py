@@ -1,4 +1,5 @@
 """Functions for creating and displaying plots compliant with the standarts."""
+from typing import Iterable
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import matplotlib
@@ -96,7 +97,17 @@ def plot_and_regress(X: Series,
     plt.show()
     return LabPlot(fig, k, b, sigma_k, sigma_b)
 
-def save_plot(fig: Figure, filename: str, extra_langs=[]) -> None:
+def save_plot(
+        fig: Figure,
+        filename: str,
+        extra_langs: Iterable[str] = tuple()) -> None:
+    """Save plot as a pgf object.
+
+    Args:
+        fig: A figure to be saved.
+        filename: Name of the resulting file.
+        extra_langs: A collection of babel languages.
+    """
     langs = "".join(map(lambda l: "," + l, extra_langs))
     matplotlib.rcParams.update({
         "pgf.preamble": "\n".join([
