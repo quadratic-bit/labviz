@@ -1,6 +1,7 @@
 LabViz
 ------
 ![coverage](./media/coverage.svg)
+
 A tool to assist in recording and visualizing lab data
 
 ### Building
