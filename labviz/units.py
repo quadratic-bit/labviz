@@ -90,7 +90,6 @@ class SIUnit:
             locale: One of the implemented locale strings
               (currently, "en" or "ru").
         """
-        # TODO: handle derived units
         result = []
         for unit in ((self.s, "s"),
                      (self.m, "m"),

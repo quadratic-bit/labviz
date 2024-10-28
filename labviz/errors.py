@@ -3,7 +3,6 @@ from labviz.series import Series
 import numpy as np
 import math
 
-# TODO: make slope optional
 def least_squares_error(X: Series,
                         Y: Series,
                         slope: float) -> tuple[float, float]:
