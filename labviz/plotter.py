@@ -55,7 +55,6 @@ class LabPlot:
     slope_error: float
     shift_error: float
 
-# TODO: multiple plots
 def plot_and_regress(X: Series,
                      Y: Series,
                      xlabel="",
