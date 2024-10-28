@@ -1,6 +1,7 @@
 """A set of classes for working with SI units."""
 from __future__ import annotations
 from dataclasses import dataclass
+from typing import Any
 
 SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹"
 
@@ -144,7 +145,7 @@ class SIValue:
         dimension: SI dimension.
     """
 
-    def __init__(self, value: float, dimension: SIUnit):
+    def __init__(self, value: float, dimension: SIUnit) -> None:
         """Initializes instance based on value and dimension.
 
         Args:
@@ -154,8 +155,7 @@ class SIValue:
         self.value = value
         self.dimension = dimension
 
-    # TODO: type annotations
-    def __mul__(self, other: object, /):
+    def __mul__(self, other: object, /) -> Any:
         if isinstance(other, SIValue):
             return SIValue(self.value * other.value,
                            self.dimension * other.dimension)
@@ -163,10 +163,10 @@ class SIValue:
             return NotImplemented
         return SIValue(self.value * other, self.dimension)
 
-    def __rmul__(self, other: object, /):
+    def __rmul__(self, other: object, /) -> Any:
         return self * other
 
-    def __truediv__(self, other: object, /):
+    def __truediv__(self, other: object, /) -> Any:
         if isinstance(other, SIValue):
             return SIValue(self.value / other.value,
                            self.dimension / other.dimension)

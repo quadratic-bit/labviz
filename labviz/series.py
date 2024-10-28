@@ -12,7 +12,9 @@ class Series:
         dimension: An SI unit.
     """
 
-    def __init__(self, base_unit: u.SIUnit | u.SIValue, values: npt.ArrayLike):
+    def __init__(self,
+                 base_unit: u.SIUnit | u.SIValue,
+                 values: npt.ArrayLike) -> None:
         """Initializes instance based on unit and an array of values.
 
         Args:
