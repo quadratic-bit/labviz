@@ -27,7 +27,7 @@ def next_color() -> str:
     color = (color + 1) % len(COLOR_ROTATION)
     return result
 
-def ensure_mode(new_mode: str):
+def ensure_mode(new_mode: str) -> None:
     """Sets matplotlib.plt mode to a new one if needed.
 
     Args:
@@ -96,7 +96,7 @@ def plot_and_regress(X: Series,
     plt.show()
     return LabPlot(fig, k, b, sigma_k, sigma_b)
 
-def save_plot(fig: Figure, filename: str, extra_langs=[]):
+def save_plot(fig: Figure, filename: str, extra_langs=[]) -> None:
     langs = "".join(map(lambda l: "," + l, extra_langs))
     matplotlib.rcParams.update({
         "pgf.preamble": "\n".join([
